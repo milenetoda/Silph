@@ -1,1 +1,193 @@
-<h1>Silph</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <title>Rank BR</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        color: #333;
+        background-color: #eee;
+        overflow-y: scroll;
+      }
+
+      #pagina {
+        max-width: 600px;
+        margin: auto;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 1.7em;
+        margin-bottom: 30px;
+      }
+
+      #lista div {
+        padding: 10px;
+        background-color: #e9e9e9;
+        border-bottom: 2px solid #ccc;
+      }
+
+      #busca {
+        border-radius: 5px;
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 1em;
+      }
+
+
+
+      h2 {
+        color: #888;
+        margin: 4px;
+        font-size: 1.1em;
+        font-weight: normal;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      a {
+        color: #0003b5;
+        text-decoration: none;        
+      }
+
+      .separator {
+        font-size: 0.5em;
+        padding: 0 10px;
+      }
+    </style>
+    <link rel="stylesheet" href="pokemon.css" />
+  </head>
+
+  <body>
+    <div id="pagina">
+      <h1>Lista Nacional da Silph</h1>
+      <div id="StefTastan">
+        <!-- pokeball container -->
+        <div id="moving-container">
+          <div id="pokeball-container">
+            <!-- pokeball -->
+            <div id="pokeball">
+              <div class="pokeball-details"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="pokes">
+          <div id="charmander">
+            <div id="arms"></div>
+            <div id="feet"></div>
+            <div id="body">
+              <div id="eyes"></div>
+              <div id="pupils"></div>
+              <div id="nostrils"></div>
+              <div id="mouth"></div>
+              <div id="belly"></div>
+            </div>
+            <div id="tail"></div>
+            <div id="flame"></div>
+          </div>
+
+          <div id="bulbasaur">
+            <div id="head">
+              <div id="eyes"></div>
+              <div id="pupils"></div>
+              <div id="nostrils"></div>
+              <div class="mouth"></div>
+            </div>
+            <div class="ears"></div>
+            <div id="body">
+              <div class="spots spot1"></div>
+              <div class="spots spot2"></div>
+              <div class="spots spot3"></div>
+            </div>
+            <div id="front-feet"></div>
+            <div id="back-feet"></div>
+            <div id="bulb"></div>
+          </div>
+
+          <div id="squirtle">
+            <div id="arms"></div>
+            <div id="feet"></div>
+            <div id="head">
+              <div id="eyes"></div>
+              <div id="pupils"></div>
+              <div id="nostrils"></div>
+              <div id="mouth"></div>
+            </div>
+            <div id="body"></div>
+            <div id="shell"></div>
+            <div id="tail"></div>
+          </div>
+        </div>
+      </div>
+      <h2>
+        
+        
+        <a href="https://youtube.com/milenetgames" target="_blank"
+          >MileneToda</a
+        >
+        <spam class="separator">⬤</spam>
+        <a href="https://codepen.io/steftastan/pen/XbMVGw" target="_blank"
+          >Pokémon</a
+        >
+        
+        <spam class="separator">⬤</spam>
+        
+        <a href="https://silph.gg/leaderboard/national/BR" target="_blank"
+          >Silph.gg
+        </a>
+        
+        
+      </h2>
+
+      <input id="busca" type="text" placeholder="Digite seu nick aqui" />
+
+      <div id="lista"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/nextapps-de/flexsearch@0.6.22/dist/flexsearch.min.js"></script>
+    <script>
+      fetch("results.json")
+        .then((response) => {
+          return response.json();
+        })
+        .then((results) => {
+          var index = FlexSearch.create();
+          for (var key in results) {
+            index.add(key, results[key]);
+            addresult(key, results[key]);
+          }
+
+          var searchbox = document.querySelector("#busca");
+          var lista = document.querySelector("#lista");
+
+          searchbox.addEventListener("input", (event) => {
+            lista.innerHTML = "";
+
+            if (searchbox.value === "") {
+              for (var key in results) {
+                addresult(key, results[key]);
+              }
+            } else {
+              var keys = index.search(searchbox.value);
+              for (var key of keys) {
+                addresult(key, results[key]);
+              }
+            }
+          });
+        });
+
+      function addresult(key, value) {
+        var div = document.createElement("div");
+        div.innerHTML = key + " " + value;
+        lista.appendChild(div);
+      }
+    </script>
+  </body>
+</html>
